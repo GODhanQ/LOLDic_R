@@ -58,7 +58,6 @@ public:
 void InSertTestData();
 void ShowMenu();
 int ExcuteCommand(int CommandNum);
-void quick_sort(int start, int end);
 
 void Print(int index);
 int Search_R(int start, int num, const string name);
@@ -67,7 +66,7 @@ void Delete_R(const string name, int index = 0, bool deleted = false);
 void DeleteAll_R(const string pos, int index = 0);
 void PrintAll_R(int index = 0);
 void FindMaxHp_R(int Current_MaxHP = numeric_limits<int>::min(), int index = 0);
-void SortByHp_R();
+void SortByHp_R(int start, int end);
 
 constexpr int Capacity{ 200 };
 LOLDic Dictionary[Capacity];
@@ -211,7 +210,8 @@ int ExcuteCommand(int CommandNum)
     else if (CommandNum == 7) {
         system("cls");
 
-        SortByHp_R();
+        SortByHp_R(0, Capacity - 1);
+        cout << "내림차순 정렬되었습니다.\n\n";
         return 0;
     }
     else {
@@ -295,7 +295,6 @@ void DeleteAll_R(const string pos, int index)
         return;
     }
     
-    string name;
     if (true == Dictionary[index].Is_Used() && pos == Dictionary[index].ShowPos()) {
         Dictionary[index].Disable();
         CountDic--;
@@ -348,7 +347,7 @@ void FindMaxHp_R(int Current_MaxHP, int index)
     FindMaxHp_R(MaxHp, index + 1);
 }
 
-void SortByHp_R()
+void SortByHp_R(int start, int end)
 {
     if (CountDic == 0) {
         system("cls");
@@ -356,13 +355,6 @@ void SortByHp_R()
         return;
     }
 
-    quick_sort(0, CountDic - 1);
-
-    system("cls");
-    cout << "내림차순 정렬되었습니다.\n\n";
-}
-
-void quick_sort(int start, int end) {
     if (start >= end) {
         return;
     }
@@ -390,9 +382,8 @@ void quick_sort(int start, int end) {
     Dictionary[j] = Dictionary[pivot];
     Dictionary[pivot] = temp;
 
-    quick_sort(start, j - 1);
-    quick_sort(j + 1, end);
-
+    SortByHp_R(start, j - 1);
+    SortByHp_R(j + 1, end);
 }
 
 constexpr int MAX_LINE_LENGTH{ 256 }; // 적절한 최대 라인 길이 정의
