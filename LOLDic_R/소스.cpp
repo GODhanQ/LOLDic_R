@@ -130,7 +130,7 @@ int ExcuteCommand(int CommandNum)
 
         index = Search_R(0, CountDic, Sname);
         system("cls");
-        Print(index);
+        if(index != NULL) Print(index);
 
         return 0;
     }
